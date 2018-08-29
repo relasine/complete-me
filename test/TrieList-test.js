@@ -62,5 +62,28 @@ describe('TRIE', () => {
     // trie.insert('app');
 
     expect(trie.suggest('ba')).to.deep.equal(['batter', 'bat', 'band']);
+  });
+
+  it('should not return a word as a suggestion if it does not match the prefix', () => {
+    trie.insert('frog');
+    trie.insert('toad');
+
+    expect(trie.suggest('f')).to.deep.equal(['frog']);
+  });
+  
+  it('should get words from the dictionary and put them into the trie', () => {
+    trie.populate(dictionary);
+    expect(trie.count()).to.deep.equal(235886);
+  });
+
+  it('should take words from the dictionary and suggest them back with matching prefixes', () => {
+    trie.populate(dictionary);
+    expect(trie.suggest('gate')).to.deep.equal(['gateado', 'gateage', 'gated', 'gatehouse', 'gatekeeper', 'gateless', 'gatelike', 'gatemaker', 'gateman', 'gatepost', 'gater', 'gatetender', 'gatewards', 'gateward', 'gatewayman', 'gateway', 'gatewise', 'gatewoman', 'gateworks', 'gatewright', 'gate'])
+  })
+
+  it('should tell you if a word has no suggestions', () => {
+    trie.populate(dictionary);
+    expect(trie.suggest('sdlfkj')).to.equal('No suggestions');
+
   })
 });
