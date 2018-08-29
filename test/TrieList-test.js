@@ -83,7 +83,7 @@ describe('TRIE', () => {
 
   it('should tell you if a word has no suggestions', () => {
     trie.populate(dictionary);
-    expect(trie.suggest('sdlfkj')).to.equal('No suggestions');
+    expect(trie.suggest('sdlfkj')).to.equal(undefined);
 
   })
 });
