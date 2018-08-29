@@ -34,7 +34,8 @@ describe('TRIE', () => {
     trie.insert('tacos');
     trie.insert('a');
     trie.insert('apple');
-    expect(trie.count()).to.equal(4);
+    trie.insert('disestablishmentarianism')
+    expect(trie.count()).to.equal(5);
   });
 
   it('should create a new root if one does not exist', () => {
@@ -47,10 +48,11 @@ describe('TRIE', () => {
     expect(trie.root.children.d.children.o.wordEnding).to.equal('do')
   });
 
-  it('should get words from the dictionary and put them into the trie', () => {
-    trie.populate(dictionary);
-    expect(trie.count()).to.deep.equal(235886);
+  it('should have multiple nodes from words with the same starting letter that have a wordEnding', () => {
+    trie.insert('a');
+    trie.insert('ace');
+    expect(trie.root.children.a.wordEnding).to.equal('a');
+    expect(trie.root.children.a.children.c.children.e.wordEnding).to.equal('ace')
   });
-
 
 });
