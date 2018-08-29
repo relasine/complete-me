@@ -61,5 +61,4 @@ describe('TRIE', () => {
     expect(trie.suggest('ba')).to.deep.equal(['batter', 'bat', 'band']);
   })
 
-
 });
