@@ -58,8 +58,7 @@ describe('TRIE', () => {
     trie.insert('batter');
     // trie.insert('app');
 
-    trie.suggest('ba');
-    // expect(trie.suggest('ap')).to.deep.equal(['app']);
+    expect(trie.suggest('ba')).to.deep.equal(['batter', 'bat', 'band']);
   })
 
 
