@@ -55,4 +55,12 @@ describe('TRIE', () => {
     expect(trie.root.children.a.children.c.children.e.wordEnding).to.equal('ace')
   });
 
+  it('should return a suggestion if the entered word is a complete word', () => {
+    trie.insert('bat')
+    trie.insert('band')
+    trie.insert('batter');
+    // trie.insert('app');
+
+    expect(trie.suggest('ba')).to.deep.equal(['batter', 'bat', 'band']);
+  })
 });
