@@ -18,8 +18,8 @@ describe('NODE', () =>  {
     expect(node.letter).to.equal('p');
   });
 
-  it('should default end to false', () => {
-    expect(node.end).to.equal(false);
+  it('should default wordEnding to null', () => {
+    expect(node.wordEnding).to.equal(null);
   });
 
   it('should default children to an empty object', () => {

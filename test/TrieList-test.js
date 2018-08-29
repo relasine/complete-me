@@ -39,12 +39,12 @@ describe('TRIE', () => {
 
   it('should create a new root if one does not exist', () => {
     trie.insert('a');
-    expect(trie.root.children).to.deep.equal({a: {letter: 'a', end: true, children: {}}});
+    expect(trie.root.children).to.deep.equal({a: {letter: 'a', wordEnding: 'a', children: {}}});
   });
 
-  it('should set the end property of the last letter to true', () => {
+  it('should set the wordEnding property of the last letter of a word to that word', () => {
     trie.insert('do');
-    expect(trie.root.children.d.children.o.end).to.equal(true)
+    expect(trie.root.children.d.children.o.wordEnding).to.equal('do')
   });
 
   it('should get words from the dictionary and put them into the trie', () => {
