@@ -115,4 +115,10 @@ describe('TRIE', () => {
     expect(trie.wordCount).to.equal(1);
   });
 
+  it('should not delete nodes that are attached to other words', () => {
+    trie.insert('he');
+    trie.insert('hello');
+    trie.delete('he');
+  })
+
 });
