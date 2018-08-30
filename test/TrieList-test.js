@@ -34,7 +34,7 @@ describe('TRIE', () => {
     trie.insert('tacos');
     trie.insert('a');
     trie.insert('apple');
-    trie.insert('disestablishmentarianism')
+    trie.insert('disestablishmentarianism');
     expect(trie.count()).to.equal(5);
   });
 
@@ -45,21 +45,20 @@ describe('TRIE', () => {
 
   it('should set the wordEnding property of the last letter of a word to that word', () => {
     trie.insert('do');
-    expect(trie.root.children.d.children.o.wordEnding).to.equal('do')
+    expect(trie.root.children.d.children.o.wordEnding).to.equal('do');
   });
 
   it('should have multiple nodes from words with the same starting letter that have a wordEnding', () => {
     trie.insert('a');
     trie.insert('ace');
     expect(trie.root.children.a.wordEnding).to.equal('a');
-    expect(trie.root.children.a.children.c.children.e.wordEnding).to.equal('ace')
+    expect(trie.root.children.a.children.c.children.e.wordEnding).to.equal('ace');
   });
 
   it('should return a suggestion if the entered word is a complete word', () => {
-    trie.insert('bat')
-    trie.insert('band')
+    trie.insert('bat');
+    trie.insert('band');
     trie.insert('batter');
-    // trie.insert('app');
 
     expect(trie.suggest('ba')).to.deep.equal(['batter', 'bat', 'band']);
   });
@@ -78,12 +77,42 @@ describe('TRIE', () => {
 
   it('should take words from the dictionary and suggest them back with matching prefixes', () => {
     trie.populate(dictionary);
-    expect(trie.suggest('gate')).to.deep.equal(['gateado', 'gateage', 'gated', 'gatehouse', 'gatekeeper', 'gateless', 'gatelike', 'gatemaker', 'gateman', 'gatepost', 'gater', 'gatetender', 'gatewards', 'gateward', 'gatewayman', 'gateway', 'gatewise', 'gatewoman', 'gateworks', 'gatewright', 'gate'])
-  })
+    expect(trie.suggest('gate')).to.deep.equal(['gateado', 'gateage', 'gated', 'gatehouse', 'gatekeeper', 'gateless', 'gatelike', 'gatemaker', 'gateman', 'gatepost', 'gater', 'gatetender', 'gatewards', 'gateward', 'gatewayman', 'gateway', 'gatewise', 'gatewoman', 'gateworks', 'gatewright', 'gate']);
+  });
 
   it('should tell you if a word has no suggestions', () => {
     trie.populate(dictionary);
     expect(trie.suggest('sdlfkj')).to.equal(undefined);
+  });
 
-  })
+  it('should tell you there are no words in the pre-trie if you try to delete without them', () => {
+    expect(trie.delete('word')).to.equal('There are no words in the prefix-trie!');
+  });
+
+  it('should tell you if a word is not in the prefix-trie if you try to delete one', () =>{
+    trie.insert('frog');
+    expect(trie.delete('toad')).to.equal('This word is not in the prefix trie!');
+  });
+
+  it('should delete stuff', () => {
+    trie.insert('b');
+    trie.insert('br');
+    trie.delete('br');
+    expect(trie.root.children.b.children).to.deep.equal({});
+  });
+
+  it('should reduce the wordCount if you delete a word', () => {
+    expect(trie.wordCount).to.equal(0);
+    trie.insert('word');
+    expect(trie.wordCount).to.equal(1);
+    trie.delete('word');
+    expect(trie.wordCount).to.equal(0);
+  });
+
+  it('should not reduce the wordCount if you try to delete a word not in the trie', () => {
+    trie.insert('friend');
+    trie.delete('word');
+    expect(trie.wordCount).to.equal(1);
+  });
+
 });
