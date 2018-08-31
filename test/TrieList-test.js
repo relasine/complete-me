@@ -101,8 +101,10 @@ describe('TRIE', () => {
   });
 
   it('should delete stuff when there is more than one entry', () => {
+    trie.insert('a');
     trie.insert('b');
     trie.delete('b');
+    expect(trie.root.children.a).to.exist;
   })
 
   it('should reduce the wordCount if you delete a word', () => {
@@ -122,23 +124,25 @@ describe('TRIE', () => {
   it('should not delete nodes that are attached to other words', () => {
     trie.insert('hello');
     trie.delete('he');
+    expect(trie.root.children.h.children.e.children.l.children.l.children.o).to.exist;
+    expect(trie.root.children.h.children.e.wordEnding).to.equal(null)
   })
 
   it('should be able to delete one-letter words', () => {
     trie.insert('a');
     trie.insert('b');
     trie.delete('a');
-    expect(trie.root.children.b).to.deep.equal({ letter: 'b', wordEnding: 'b', children: {}, priority: 0 })
+    expect(trie.root.children.b).to.deep.equal({ letter: 'b', wordEnding: 'b', children: {}, priority: 0 });
   })
 
-  it('should increment the priority proprty when you call select on a word', () => {
-    trie.insert('hello');
+  it('should present high-priority words first when suggest is called', () => {
     trie.insert('he');
-    trie.insert('helicopter')
+    trie.insert('helicopter');
     trie.insert('ha');
-    trie.insert('ace')
+    trie.insert('hello');
+    trie.insert('ace');
     trie.select('hello');
-    expect(trie.suggest('he')).to.deep.equal([ 'hello', 'helicopter', 'he' ])
+    expect(trie.suggest('he')).to.deep.equal([ 'hello', 'helicopter', 'he' ]);
   });
 
 });
