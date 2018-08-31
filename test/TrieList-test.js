@@ -132,7 +132,7 @@ describe('TRIE', () => {
     trie.insert('a');
     trie.insert('b');
     trie.delete('a');
-    expect(trie.root.children.b).to.deep.equal({ letter: 'b', wordEnding: 'b', children: {}, priority: 0 });
+    expect(trie.root.children).to.deep.equal({ b: { letter: 'b', wordEnding: 'b', children: {}, priority: 0 } });
   })
 
   it('should present high-priority words first when suggest is called', () => {
