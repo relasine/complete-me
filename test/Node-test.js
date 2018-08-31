@@ -26,4 +26,8 @@ describe('NODE', () =>  {
     expect(node.children).to.deep.equal({});
   });
 
+  it('should default priority to 0', () => {
+    expect(node.priority).to.equal(0)
+  })
+
 });
